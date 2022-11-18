@@ -3,7 +3,8 @@
 #include <locale.h>
 
 double **cadastraSL(int,int);
-void verSL(double**, int, int);
+void verSistemaLinear(double **,int ,int);
+void verMatriz(double**, int, int);
 void instrucoes();
 double **resolverSL(double**, int, int);
 void retroSubstituicao(double**, int, int);
@@ -13,20 +14,31 @@ int main(){
     setlocale(LC_ALL,"Portuguese");
     setlocale(LC_ALL,"pt_BR.UTF-8");
     int selecao;
-    printf("O que deseja fazer? \n______________________________\n");
-    printf("1) Cadastrar Sistema Linear \n2) Ver Sistema Linear inserido\n");
-    printf("3) Exibir instruoces de erros \n4) Ver o Sitema Linear Escalonado\n5)Resolver Sistema Linear atraves do metodo de Gauss\n0) Sair\n______________________________\n");
+    printf("\n|********************************************************|\n|\t\t\tMENU\t\t\t\t |");
+    printf("\n|********************************************************|\n");
+    printf("|1) Cadastrar Sistema Linear\t\t\t\t |");
+    printf("\n|2) Ver Sistema Linear inserido\t\t\t\t |");
+    printf("\n|3) Exibir instruoces de erros\t\t\t\t |");
+    printf("\n|4) Ver o Sitema Linear Escalonado\t\t\t |");
+    printf("\n|5) Resolver Sistema Linear atraves do metodo de Gauss\t |");
+    printf("\n|6) Resolver o Sistema Linear pelo metodo de Gauss-Jordan|");
+    printf("\n|0) Sair\t\t\t\t\t\t |\n|________________________________________________________|\n");
     scanf("%d", &selecao);
     while(selecao!=0){//ciclo
         switch (selecao){
             case 1:
-                printf("Qual a dimensao do sistema linear? \n(Incluindo a coluna de solucoes! Se o sistema eh 5x5 entao devera ser inserido como 5x6, ja que ha a coluna de solucoes) :\nOBS:Dimensao minima [5x6]  ");
-                int linhas, colunas;
-                scanf("%d%d", &linhas, &colunas);//escaneia e armazena os valores nos enderecos de linhas e colunas
-                if(linhas < 5 || colunas <6){//limite mínimo estipulado
+                printf("Qual a dimensao do sistema linear? \n(Sem incluir a coluna de solucoes!)\n");
+                int linhas;
+                int colunas;
+                scanf(" %d", &linhas);//escaneia e armazena os valores nos enderecos de linhas e colunas
+
+                colunas = linhas + 1;
+
+                if(linhas != colunas && linhas< 5){//limite mínimo estipulado
                     printf("ERRO#001 - Valores nao aceitos!");
                     break;
                 }
+                
                 if(linhas > 1000 || colunas >1001){//limite máximo estipulado
                     printf("ERRO#002 - Valores nao aceitos!");
                     break;
@@ -40,7 +52,7 @@ int main(){
                 break;
                 }
                 printf("\n------------------------------------------\n");
-                verSL(matrizOriginal, linhas, colunas);//imprime a matriz
+                verMatriz(matrizOriginal, linhas, colunas);//imprime a matriz
                 printf("------------------------------------------\n\n");
             break;
 
@@ -54,9 +66,9 @@ int main(){
                 break;
                 }
                 printf("\n****************\nMatriz original: \n------------------------------------------\n\n");
-                verSL(matrizOriginal,linhas,colunas);//imprime a matriz
+                verMatriz(matrizOriginal,linhas,colunas);//imprime a matriz
                 printf("\nMatriz ao aplicar o metodo de Gauss: \n------------------------------------------\n\n");
-                verSL(resolverSL(matrizOriginal,linhas,colunas),linhas,colunas);//imprime a matriz escalonada
+                verMatriz(resolverSL(matrizOriginal,linhas,colunas),linhas,colunas);//imprime a matriz escalonada
                 printf("\n");
             break;
 
@@ -74,13 +86,16 @@ int main(){
             default:
                 printf("ERRO#03! \n");
             }
-            
-            
-
-        printf("\nO que deseja fazer? \n______________________________\n");
-        printf("1) Cadastrar Sistema Linear \n2) Ver Sistema Linear inserido\n");
-        printf("3) Exibir instruoces de ajuda \n4) Ver o Sitema Linear Escalonado\n5)Resolver Sistema Linear atraves do metodo de Gauss\n0) Sair\n______________________________\n");
-        scanf("%d", &selecao);
+            printf("\n|********************************************************|\n|\t\t\tMENU\t\t\t\t |");
+            printf("\n|********************************************************|\n");
+            printf("|1) Cadastrar Sistema Linear\t\t\t\t |");
+            printf("\n|2) Ver Sistema Linear inserido\t\t\t\t |");
+            printf("\n|3) Exibir instruoces de erros\t\t\t\t |");
+            printf("\n|4) Ver o Sitema Linear Escalonado\t\t\t |");
+            printf("\n|5) Resolver Sistema Linear atraves do metodo de Gauss\t |");
+            printf("\n|6) Resolver o Sistema Linear pelo metodo de Gauss-Jordan|");
+            printf("\n|0) Sair\t\t\t\t\t\t |\n|________________________________________________________|\n");
+            scanf("%d", &selecao);
     }
     
     return 0;
@@ -106,7 +121,15 @@ double **cadastraSL(int linha, int coluna){
     return ponteiroMatriz;//retorna a matriz
 }
 
-void verSL(double **matriz,int m,int n){
+void verSistemaLinear(double **matriz,int m,int n){
+    for(int i = 0; i<m; i++){
+        for(int j = 0; j < n; j++){
+            printf("%0.2lf x%d\t", matriz[i][j], j+1);//imprime cada elemento da matriz
+        }
+        printf("\n");
+    }
+}
+void verMatriz(double **matriz,int m,int n){
     for(int i = 0; i<m; i++){
         for(int j = 0; j < n; j++){
             printf("%0.2lf\t", matriz[i][j]);//imprime cada elemento da matriz
