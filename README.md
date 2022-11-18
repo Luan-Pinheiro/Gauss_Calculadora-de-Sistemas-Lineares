@@ -11,7 +11,8 @@ O software utiliza do método de Gauss para solução de Sistemas Lineares.
 - Cadastro dinâmico de Sistemas Lineares
 - Exibição de erros
 - Impressão da matriz original e escalona até triangular superios
-- Cálculo de resoltados das varriáveis do sistema linear
+- Cálculo de resultados das variáveis do sistema linear
+- Aplicação dos métodos de Gauss e Gauss-Jordan
 
 
 
