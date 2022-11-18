@@ -11,26 +11,30 @@ void retroSubstituicao(double**, int, int);
 void sair(double**, int);
 
 int main(){
+
     setlocale(LC_ALL,"Portuguese");
     setlocale(LC_ALL,"pt_BR.UTF-8");
+
     int selecao;
+
     printf("\n|********************************************************|\n|\t\t\tMENU\t\t\t\t |");
     printf("\n|********************************************************|\n");
     printf("|1) Cadastrar Sistema Linear\t\t\t\t |");
     printf("\n|2) Ver Sistema Linear inserido\t\t\t\t |");
     printf("\n|3) Exibir instruoces de erros\t\t\t\t |");
-    printf("\n|4) Ver o Sitema Linear Escalonado\t\t\t |");
+    printf("\n|4) Ver o Matriz Escalonada\t\t\t\t |");
     printf("\n|5) Resolver Sistema Linear atraves do metodo de Gauss\t |");
     printf("\n|6) Resolver o Sistema Linear pelo metodo de Gauss-Jordan|");
     printf("\n|0) Sair\t\t\t\t\t\t |\n|________________________________________________________|\n");
     scanf("%d", &selecao);
+
     while(selecao!=0){//ciclo
         switch (selecao){
             case 1:
                 printf("Qual a dimensao do sistema linear? \n(Sem incluir a coluna de solucoes!)\n");
                 int linhas;
                 int colunas;
-                scanf(" %d", &linhas);//escaneia e armazena os valores nos enderecos de linhas e colunas
+                scanf("%d", &linhas);//escaneia e armazena os valores nos enderecos de linhas e colunas
 
                 colunas = linhas + 1;
 
@@ -48,10 +52,13 @@ int main(){
 
             case 2:
                 if (*matrizOriginal == NULL){
-                printf("Matriz deve ser cadastrada primeiro!\n");
-                break;
+                    printf("Matriz deve ser cadastrada primeiro!\n");
+                    break;
                 }
-                printf("\n------------------------------------------\n");
+                printf("------------------------------------------\nSistema Linear:\n");
+                verSistemaLinear(matrizOriginal, linhas, colunas);
+                printf("------------------------------------------\n\n");
+                printf("\n------------------------------------------\nMatriz:\n");
                 verMatriz(matrizOriginal, linhas, colunas);//imprime a matriz
                 printf("------------------------------------------\n\n");
             break;
@@ -62,8 +69,8 @@ int main(){
 
             case 4:
                 if (*matrizOriginal == NULL){
-                printf("Matriz deve ser cadastrada primeiro!\n");
-                break;
+                    printf("Matriz deve ser cadastrada primeiro!\n");
+                    break;
                 }
                 printf("\n****************\nMatriz original: \n------------------------------------------\n\n");
                 verMatriz(matrizOriginal,linhas,colunas);//imprime a matriz
@@ -74,8 +81,8 @@ int main(){
 
             case 5:
                 if (*matrizOriginal == NULL){
-                printf("Matriz deve ser cadastrada primeiro!\n");
-                break;
+                    printf("Matriz deve ser cadastrada primeiro!\n");
+                    break;
                 }
                 printf("\n****************\nResultados: \n------------------------------------------\n\n");
                 retroSubstituicao(matrizOriginal,linhas,colunas);//imprime os resultados
@@ -91,7 +98,7 @@ int main(){
             printf("|1) Cadastrar Sistema Linear\t\t\t\t |");
             printf("\n|2) Ver Sistema Linear inserido\t\t\t\t |");
             printf("\n|3) Exibir instruoces de erros\t\t\t\t |");
-            printf("\n|4) Ver o Sitema Linear Escalonado\t\t\t |");
+            printf("\n|4) Ver o Matriz Escalonada\t\t\t\t |");
             printf("\n|5) Resolver Sistema Linear atraves do metodo de Gauss\t |");
             printf("\n|6) Resolver o Sistema Linear pelo metodo de Gauss-Jordan|");
             printf("\n|0) Sair\t\t\t\t\t\t |\n|________________________________________________________|\n");
@@ -123,8 +130,19 @@ double **cadastraSL(int linha, int coluna){
 
 void verSistemaLinear(double **matriz,int m,int n){
     for(int i = 0; i<m; i++){
-        for(int j = 0; j < n; j++){
-            printf("%0.2lf x%d\t", matriz[i][j], j+1);//imprime cada elemento da matriz
+        for(int j = 0; j < n; j++){;// imprime elementos do sistema linear e seus operadores
+            if(j == 0){
+                if(matriz[i][j] >= 0)
+                    printf("%0.1lfx%d  ", matriz[i][j], j+1);
+                else
+                    printf("%0.1lfx%d  ", matriz[i][j], j+1);       
+            }
+            else{
+                if(matriz[i][j] >= 0)
+                    (j==n-1) ? printf("= %0.1lf", matriz[i][j]) : printf("+ %0.1lfx%d  ", matriz[i][j], j+1);
+                else
+                    (j==n-1) ? printf("= %0.1lf", matriz[i][j]) : printf("%0.1lfx%d  ", matriz[i][j], j+1);
+            }
         }
         printf("\n");
     }
