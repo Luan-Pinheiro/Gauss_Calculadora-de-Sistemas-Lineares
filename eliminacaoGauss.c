@@ -1,7 +1,10 @@
+
+//Inclusão de bibliotecas
 #include <stdio.h>
 #include <stdlib.h>
 #include <locale.h>
 
+//protótipos das funções
 double **cadastraSL(int,int);
 void verSistemaLinear(double **,int ,int);
 void verMatriz(double**, int, int);
@@ -11,12 +14,13 @@ void retroSubstituicao(double**, int, int);
 void sair(double**, int);
 
 int main(){
-
+    // setando idioma pra protuguês
     setlocale(LC_ALL,"Portuguese");
     setlocale(LC_ALL,"pt_BR.UTF-8");
 
     int selecao;
 
+    //exibição do menu antes do ciclo
     printf("\n|********************************************************|\n|\t\t\tMENU\t\t\t\t |");
     printf("\n|********************************************************|\n");
     printf("|1) Cadastrar Sistema Linear\t\t\t\t |");
@@ -24,7 +28,6 @@ int main(){
     printf("\n|3) Exibir instruoces de erros\t\t\t\t |");
     printf("\n|4) Ver o Matriz Escalonada\t\t\t\t |");
     printf("\n|5) Resolver Sistema Linear atraves do metodo de Gauss\t |");
-    printf("\n|6) Resolver o Sistema Linear pelo metodo de Gauss-Jordan|");
     printf("\n|0) Sair\t\t\t\t\t\t |\n|________________________________________________________|\n");
     scanf("%d", &selecao);
 
@@ -36,22 +39,17 @@ int main(){
                 int colunas;
                 scanf("%d", &linhas);//escaneia e armazena os valores nos enderecos de linhas e colunas
 
-                colunas = linhas + 1;
+                colunas = linhas + 1;// definindo espaço para coluna de soluções
 
                 if(linhas != colunas && linhas< 5){//limite mínimo estipulado
                     printf("ERRO#001 - Valores nao aceitos!");
-                    break;
-                }
-                
-                if(linhas > 1000 || colunas >1001){//limite máximo estipulado
-                    printf("ERRO#002 - Valores nao aceitos!");
                     break;
                 }
                 double **matrizOriginal = cadastraSL(linhas, colunas); 
             break;
 
             case 2:
-                if (*matrizOriginal == NULL){
+                if (*matrizOriginal == NULL){//verificando se há algo no endereço da memória
                     printf("Matriz deve ser cadastrada primeiro!\n");
                     break;
                 }
@@ -64,9 +62,8 @@ int main(){
             break;
 
             case 3:
-                instrucoes();
+                instrucoes();// exibe função de instruções.
             break;
-
             case 4:
                 if (*matrizOriginal == NULL){
                     printf("Matriz deve ser cadastrada primeiro!\n");
@@ -78,7 +75,6 @@ int main(){
                 verMatriz(resolverSL(matrizOriginal,linhas,colunas),linhas,colunas);//imprime a matriz escalonada
                 printf("\n");
             break;
-
             case 5:
                 if (*matrizOriginal == NULL){
                     printf("Matriz deve ser cadastrada primeiro!\n");
@@ -89,10 +85,10 @@ int main(){
                 printf("\n");
                 sair(matrizOriginal, colunas);
             break;
-
             default:
                 printf("ERRO#03! \n");
             }
+            //exibição do menu durante o ciclo
             printf("\n|********************************************************|\n|\t\t\tMENU\t\t\t\t |");
             printf("\n|********************************************************|\n");
             printf("|1) Cadastrar Sistema Linear\t\t\t\t |");
@@ -100,11 +96,9 @@ int main(){
             printf("\n|3) Exibir instruoces de erros\t\t\t\t |");
             printf("\n|4) Ver o Matriz Escalonada\t\t\t\t |");
             printf("\n|5) Resolver Sistema Linear atraves do metodo de Gauss\t |");
-            printf("\n|6) Resolver o Sistema Linear pelo metodo de Gauss-Jordan|");
             printf("\n|0) Sair\t\t\t\t\t\t |\n|________________________________________________________|\n");
             scanf("%d", &selecao);
     }
-    
     return 0;
 }
 
@@ -174,8 +168,8 @@ double **resolverSL(double **matriz,int m,int n){
             if(matrizAuxiliar[i][j] != 0){
                 if(i != j){
                     // trocando Linha(i) e Linha(j)
-                    double aux;
-                    for(int l = 0; l < n; l++){
+                    double aux;//criação de auxiliar
+                    for(int l = 0; l < n; l++){//troca com auxilio do aux
                         aux =  matrizAuxiliar[i][l];
                         matrizAuxiliar[i][l] = matrizAuxiliar[j][l];
                         matrizAuxiliar[j][l] = aux;
@@ -189,10 +183,10 @@ double **resolverSL(double **matriz,int m,int n){
                         matrizAuxiliar[k][x] += cnst * matrizAuxiliar[j][x]; //substituindo na linha o novo valor
                     }
                 }
-            break;
+                break;
 
             }else{
-                if(i == m-1){
+                if(i == m-1){//Já estaria na ultima linha com todos os elementos iguais a 0, portanto não possui solução
                     printf("Este sistema nao possui so uma solucao! \n");
                     printf("FIM DA EXECUCAO! \n\n");
                     return 0;//encerra o programa
@@ -204,9 +198,10 @@ double **resolverSL(double **matriz,int m,int n){
 }
 
 void retroSubstituicao(double **matriz, int m, int n){
-    double **matrizAxiliar = matriz;
+    double **matrizAxiliar = matriz;//criando matriz auxiliar
     double *resI = (double*) malloc(m * sizeof(double)); //respostas das incognitas
-    double **matrizAuxiliarDois = resolverSL(matrizAxiliar, m, n);//
+    double **matrizAuxiliarDois = resolverSL(matrizAxiliar, m, n);/*armazenando o valor da matriz resolvida, com 
+    o valor da matrizAuxiliar, na matrizAuxiliarDois.*/
 
     for(int i = 0; i < m; i++){
         int indice = m -1 -i; // detectar indice
