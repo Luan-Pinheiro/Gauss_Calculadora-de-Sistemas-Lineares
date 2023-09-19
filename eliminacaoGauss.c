@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <locale.h>
 
-//protótipos das funções
+//Prototipos das funções
 double **cadastraSL(int,int);
 void verSistemaLinear(double **,int ,int);
 void verMatriz(double**, int, int);

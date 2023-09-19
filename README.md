@@ -8,7 +8,7 @@ O software utiliza do método de Gauss para solução de Sistemas Lineares.
 
 ## Funcionalidades
 
-- Cadastro dinâmico de Sistemas Lineares
+- Inserção dinâmica de Sistemas Lineares
 - Exibição de erros
 - Impressão da matriz original e escalona até triangular superios
 - Cálculo de resultados das variáveis do sistema linear
@@ -23,9 +23,6 @@ O software utiliza do método de Gauss para solução de Sistemas Lineares.
 
 ## 🚀 Sobre mim
 Estudante de Ciência da Computação na Universidade Estadual do Sudoeste da Bahia (UESB).
-
-
-
 
 
 ## Aprendizados
